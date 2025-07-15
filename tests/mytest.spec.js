@@ -1,0 +1,15 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://www.google.com/?gws_rd=ssl');
+  await page.getByRole('combobox', { name: 'Search' }).click();
+  await page.getByRole('combobox', { name: 'Search' }).fill('playwright');
+  await page.goto('https://demoblaze.com/');
+  await page.getByRole('link', { name: 'Log in' }).click();
+  await page.locator('#loginusername').click();
+  await page.locator('#loginusername').fill('Lakshmisri');
+  await page.locator('#loginpassword').click();
+  await page.locator('#loginpassword').fill('Demo@123');
+  await page.getByRole('button', { name: 'Log in' }).click();
+  await page.getByRole('link', { name: 'Log out' }).click();
+});
