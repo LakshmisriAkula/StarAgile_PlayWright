@@ -121,15 +121,23 @@ test('Handling Prompt Alerts', async ({ page }) => {
 })
 
 
-test.only('handling popup window', async ({ page }) => {
+test('handling popup window', async ({ page, context }) => {
 
-    await page.goto("https://testautomationpractice.blogspot.com/");
+    await page.goto("https://omayo.blogspot.com/");
 
-    await page.locator('#PopUp').click();
-    
-    const text = await page.locator('.navbar__title.text--truncate').textContent();
+    // Listen for the popup window
+    const [popup] = await Promise.all([
+        context.waitForEvent('page'), // Waits for the popup
+        page.locator("//a[normalize-space()='Open a popup window']").click()
+    ]);
 
-    await expect(text).toContain('Playwright');
+    // Wait for the popup to load
+    await popup.waitForLoadState();
+
+    // Now, locate the heading in the popup window
+    const text = await popup.locator("div[class='example'] h3").textContent();
+
+    expect(text).toContain('New Window');
 
 
 })
