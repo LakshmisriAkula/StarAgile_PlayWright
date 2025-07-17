@@ -42,7 +42,7 @@ test('getByRole', async ({ page }) => {
 
 })
 
-test.only('getByTitle', async ({ page }) => {
+test('getByTitle', async ({ page }) => {
 
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
