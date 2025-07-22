@@ -121,23 +121,17 @@ test('Handling Prompt Alerts', async ({ page }) => {
 })
 
 
-test('handling popup window', async ({ page, context }) => {
+test('handling popup window', async ({ page  }) => {
 
-    await page.goto("https://omayo.blogspot.com/");
+    await page.goto("https://www.makemytrip.com/");
 
-    // Listen for the popup window
-    const [popup] = await Promise.all([
-        context.waitForEvent('page'), // Waits for the popup
-        page.locator("//a[normalize-space()='Open a popup window']").click()
-    ]);
+    await page.click(".commonModal__close");
 
-    // Wait for the popup to load
-    await popup.waitForLoadState();
+    await page.locator("//li[@class='makeFlex hrtlCenter font10 makeRelative lhUser userLoggedOut']").click();
 
-    // Now, locate the heading in the popup window
-    const text = await popup.locator("div[class='example'] h3").textContent();
+    await page.fill("//input[@placeholder='Enter Mobile Number']", "9642286900");
 
-    expect(text).toContain('New Window');
+    await expect(page.locator("//input[@placeholder='Enter Mobile Number']")).toHaveValue('9642286900');
 
 
 })
